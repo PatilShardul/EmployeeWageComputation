@@ -1,18 +1,21 @@
 #!/usr/bin/bash -x
 
-wagePerHour=20
-hourInADay=8
+randomCheck=$((RANDOM%3))
+isFullTime=1
+isPartTime=2
 salary=0
+ratePerHr=20
 
-echo "Welcome To employee Wage Computation"
 
-attendance=$(( RANDOM%2 ))
-
-if [ $attendance -eq 0 ]
+if [ $isFullTime -eq $randomCheck ]
 then
-        salary=$(( $hourInADay*$hourInADay ))
+        numOfworkingHrs=8
+elif [ $isPartTime -eq $randomCheck ]
+then
+        numOfworkingHrs=4
 else
-        salary=0
+        numOfworkingHrs=0
 fi
 
-echo "Wage of one day : " $salary
+salary=$(( $ratePerHr*$numOfworkingHrs ))
+echo "Employee wage:" $salary
