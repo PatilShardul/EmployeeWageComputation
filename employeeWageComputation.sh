@@ -1,30 +1,40 @@
 #!/bin/bash -x
 
+#!/bin/bash -x
 
-isFullTime=1
-isPartTime=2
+#CONSTANTS
+IS_FULL_TIME=1
+IS_PART_TIME=2
 salary=0
-ratePerHr=20
-numofWorkingDays=20;
+RATE_PER_HR=20
+MAX_WORKING_DAYS=20;
+MAX_WORKING_HRS=60;
+
+#VARIABLES
+totalWorkingDays=1;
+totalWorkingHrs=0;
 
 
-for (( day=1;day<=$numofWorkingDays;day++ ))
+while [[ $totalWorkingHrs -lt $MAX_WORKING_HRS && $totalWorkingDays -lt $MAX_WORKING_DAYS ]]
 do
+        ((totalWorkingDays++))
         empCheck=$((RANDOM%3))
         case $empCheck in
-                $isFullTime)
+                $IS_FULL_TIME)
                 echo "FullTime Employee"
-                empHrs=8 ;;
-                $isPartTime)
+                empHrs=8
+                ;;
+                $IS_PART_TIME)
                 echo "PartTime Employee"
-				empHrs=4;;
+                empHrs=4
+                ;;
                 *)
                 echo "Employee is Absent"
                 empHrs=0;;
-        esac
+		esac
+totalWorkingHrs=$(($totalWorkingHrs+$empHrs))
 
-        salary=$(( $ratePerHr*$empHrs ))
-        echo "Per Day Salary:" $salary
-        totalSalary=$(($totalsalary+$salary ))
 done
+
+totalSalary=$(($totalWorkingHrs*$RATE_PER_HR ))
 echo "Employee wage per month:" $totalSalary
